@@ -1,4 +1,4 @@
-# bottle-route-namespace(bottle-nms)
+# Bottle-route-namespace(bottle-nms)
 Use namespace to better organize bottle routes
 
 # Usage
