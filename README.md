@@ -11,11 +11,11 @@ from bottle-nms import namespace
 
 auth = namespace('/auth', route)
 
-@auth.url('/login')
+@auth.route('/login')
 def login():
     pass
 
-@auth.url('/signup', method="POST")
+@auth.route('/signup', method="POST")
 def signup():
     pass
 
