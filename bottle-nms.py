@@ -1,8 +1,8 @@
 class namespace:
     def __init__(self, base, route):
-        self.base = base
-        self.route = route
+        self.base_url = base
+        self.base_route = route
         
-    def url(_url, *args, **kwargs):
-        return self.route(base+_url, *args, *kwargs)
+    def route(self, url, *args, **kwargs):
+        return self.base_route(self.base_url+url, *args, *kwargs)
     
