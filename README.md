@@ -1,5 +1,5 @@
 # Bottle-route-namespace(bottle-nms)
-Use namespace to better organize bottle routes
+Bottle extension to use namespace to better organize bottle routes
 
 # Usage
 Create an instance of the namespace class
