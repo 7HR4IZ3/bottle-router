@@ -18,5 +18,6 @@ def login():
 @auth.url('/signup', method="POST")
 def signup():
     pass
-# produces the route "/auth/login" and "/auth/signup"
+
+# produces the routes "/auth/login" and "/auth/signup"
 ```
