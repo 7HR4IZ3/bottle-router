@@ -62,6 +62,7 @@ Parameters:
             'description': request.POST.description
         }
         try:
+            db.add(data)
             response['status-code'] = 200
         except:
             response['status-code'] = 400
