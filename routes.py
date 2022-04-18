@@ -1,5 +1,18 @@
 import types
-from .extra import _get, load_module
+
+def load_module(target, **namespace):
+	module, target = target.split(":", 1) if ':' in target else (target, None)
+	if module not in sys.modules: __import__(module)
+	if not target: return sys.modules[module]
+	if target.isalnum(): return getattr(sys.modules[module], target)
+	package_name = module.split('.')[0]
+	namespace[package_name] = sys.modules[package_name]
+	return eval('%s.%s' % (module, target), namespace)
+
+
+def _get(data, index=0, e=None):
+	try:return data[index] if type(data) in (list, dict, set, tuple) else data
+	except:return e
 
 class Router:
 	'''
@@ -9,7 +22,7 @@ Adds the set namespace to all route set by the class instance
 Parameters:
   During Creation:
 	base url: '/auth'
-	base route: usually Bottle.route or route or <Your Bottle instance>.route
+	app: wsgi app entry
 	routes (optional): a list of your app routes
 	
   Calling route and new method:
@@ -125,35 +138,4 @@ Usage:
 						self.route(url=url, method=method, callback=func.as_view, name=name, apply=apply, skip=skip)
 				elif type(routes[x]) is dict:
 					make(routes[x], base_url=base_url+x)
-				elif type(routes[x]) is str:
-					if "::" in routes[x]:
-						app, framework = routes[x].split("::")
-					else:
-						app = routes[x]
-						framework = "bottle"
-					self.app.mount(x, get_app(app, framework))
 		make(routes)
-
-def get_app(appn, framework):
-	if framework == "bottle":
-		app = load_module(appn)
-		return app.get_app()
-	elif framework == "django":
-		app = load_module(f"{appn}.wsgi")
-		return app.application
-	elif framework == 'flask':
-		if "." in appn:
-			app, ins = appn.split(".")
-		else:
-			app = appn
-			ins = "app"
-		app = load_module(app)
-		return getattr(getattr(app, ins), "wsgi_app")
-	elif framework == "pyramid":
-		if "." in appn:
-			app, ins = appn.split(".")
-		else:
-			app = appn
-			ins = "app"
-		app = load_module(app)
-		return getattr(app, ins)
