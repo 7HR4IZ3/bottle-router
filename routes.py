@@ -132,10 +132,9 @@ Usage:
 					skip = _get(data=routes[x], index=4)
 					
 					url=base_url+self._url(x)
-					if type(func) is types.MethodType or types.FunctionType or types.LambdaType:
-						self.route(url=url, method=method, callback=func, name=name, apply=apply, skip=skip)
-					else:
-						self.route(url=url, method=method, callback=func.as_view, name=name, apply=apply, skip=skip)
+				        al = [func, method, name, apply, skip]
+					args = [a for a in al if a]
+					self.route(url, *args) 
 				elif type(routes[x]) is dict:
 					make(routes[x], base_url=base_url+x)
 		make(routes)
