@@ -34,7 +34,7 @@ Parameters:
     app = Bottle()
     api = Router('/', app.route)
 
-    def getProducts(self):
+    def getProducts():
         response['content-type'] = 'application/json'
         data = db.get()
         return data
@@ -67,7 +67,7 @@ Parameters:
         except:
             response['status-code'] = 400
 
-    api.router( = [
+    api.router([
             '/api', # Base url for all routes defined here
             {
                 'url': '/products',
