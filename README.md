@@ -1,5 +1,6 @@
 # Router
 Extension to use namespace to better organize routes
+Works with any framework that uses the @app.route("/") style for route declaration 
 
 # Usage
 Router to handle routes
@@ -15,24 +16,29 @@ Parameters:
 
 ``` python
     # Router.route:
-        auth = Router('/auth', route)
+        auth = Router('/auth', app)
         @auth.route(url='/login', method="GET")
         def login():
             ...
     
         # produces:
-            route('/auth/login', method="GET")
+            app.route('/auth/login', method="GET")
+
     # Router.new and Router.router:
-        auth = Router('/auth', route)
+        auth = Router('/auth', app)
+
         def login():
            ...
+
         # Create route
         auth.new(url='/login', func=login, method='POST')
+
         # Instantiate all created routes
         auth.router()
+
     # You can also call Router.router() directly and pass a url routes argument
     app = Bottle() or Flask(__file__)
-    api = Router('/', app.route)
+    api = Router('/', app)
 
     def getProducts():
         response['content-type'] = 'application/json'
