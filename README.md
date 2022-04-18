@@ -1,5 +1,5 @@
-# Bottle-router
-Bottle extension to use namespace to better organize bottle routes
+# Router
+Extension to use namespace to better organize routes
 
 # Usage
 Router to handle routes
@@ -8,7 +8,7 @@ Adds the set namespace to all route set by the class instance
 Parameters:
   During Creation:
     base url: '/auth'
-    bass route: Bottle.route or route or <Your Bottle instance>.route
+    app: wsgi app
     routes: a list of your app routes
   Calling route method:
     the default routes arguments
@@ -31,7 +31,7 @@ Parameters:
         # Instantiate all created routes
         auth.router()
     # You can also call Router.router() directly and pass a url routes argument
-    app = Bottle()
+    app = Bottle() or Flask(__file__)
     api = Router('/', app.route)
 
     def getProducts():
@@ -66,8 +66,19 @@ Parameters:
             response['status-code'] = 200
         except:
             response['status-code'] = 400
+    routes = {}
+    routes["/api"] = {
+        "/products": (getProducts, "GET", "get-products"), 
+        "/new" : {
+            "/products" : (addProduct, "POST", "add")
+           }
+    }
+    routes["/api"]["/products/<id:int>"] = (getProductsId, "GET", "single")
+    api.router(routes)
 
-    api.router([
+    # Or use router_v2
+
+    api.router_v2([
             '/api', # Base url for all routes defined here
             {
                 'url': '/products',
