@@ -16,25 +16,25 @@ Parameters:
 
 ``` python
     # Router.route:
-        auth = Router('/auth', app)
-        @auth.route(url='/login', method="GET")
-        def login():
-            ...
-    
-        # produces:
-            app.route('/auth/login', method="GET")
+    auth = Router('/auth', app)
+    @auth.route(url='/login', method="GET")
+    def login():
+        ...
+
+    # produces:
+        app.route('/auth/login', method="GET")
 
     # Router.new and Router.router:
-        auth = Router('/auth', app)
+    auth = Router('/auth', app)
 
-        def login():
-           ...
+    def login():
+       ...
 
-        # Create route
-        auth.new(url='/login', func=login, method='POST')
+    # Create route
+    auth.new(url='/login', func=login, method='POST')
 
-        # Instantiate all created routes
-        auth.router()
+    # Instantiate all created routes
+    auth.router()
 
     # You can also call Router.router() directly and pass a url routes argument
     app = Bottle() or Flask(__file__)
